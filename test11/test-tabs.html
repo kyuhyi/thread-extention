@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>탭 전환 테스트</title>
+  <style>
+    .main-tab-content {
+      display: none;
+      padding: 20px;
+      border: 2px solid red;
+    }
+    .main-tab-content.active {
+      display: block;
+    }
+    .main-tab-btn {
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    .main-tab-btn.active {
+      background: yellow;
+    }
+  </style>
+</head>
+<body>
+  <h1>탭 전환 테스트</h1>
+
+  <div>
+    <button class="main-tab-btn active" data-main-tab="content-generator">AI 콘텐츠 생성</button>
+    <button class="main-tab-btn" data-main-tab="keyword-analyzer">월간 검색량</button>
+  </div>
+
+  <div id="contentGeneratorTab" class="main-tab-content active">
+    <h2>AI 콘텐츠 생성 탭</h2>
+    <p>이 영역이 보여야 합니다!</p>
+  </div>
+
+  <div id="keywordAnalyzerTab" class="main-tab-content">
+    <h2>월간 검색량 탭</h2>
+    <input type="text" placeholder="키워드 입력">
+    <button>검색</button>
+  </div>
+
+  <script>
+    function switchMainTab(tabName) {
+      console.log('Switching to:', tabName);
+
+      // 모든 탭 버튼 비활성화
+      document.querySelectorAll('.main-tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // 모든 콘텐츠 숨김
+      document.querySelectorAll('.main-tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+
+      // kebab-case를 camelCase로 변환 (예: "content-generator" → "contentGenerator")
+      const tabIdBase = tabName.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase());
+      const tabContentId = `${tabIdBase}Tab`;
+
+      // 선택된 탭 활성화
+      const tabBtn = document.querySelector(`[data-main-tab="${tabName}"]`);
+      const tabContent = document.getElementById(tabContentId);
+
+      console.log('Tab button:', tabBtn);
+      console.log('Tab content ID:', tabContentId, '→', tabContent);
+
+      if (tabBtn) tabBtn.classList.add('active');
+      if (tabContent) tabContent.classList.add('active');
+    }
+
+    // 이벤트 리스너 등록
+    document.querySelectorAll('.main-tab-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        switchMainTab(e.target.dataset.mainTab);
+      });
+    });
+  </script>
+</body>
+</html>
