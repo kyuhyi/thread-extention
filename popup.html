@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 콘텐츠 생성기</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="features/blog-images/blog.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 헤더 -->
+    <header class="header">
+      <div class="header-content">
+        <button id="themeToggleBtn" class="theme-toggle-btn" title="테마 전환">🌙</button>
+        <h1 class="logo">
+          <img src="icons/bsd-white.png" alt="Logo" class="logo-icon" id="logoIcon">
+          바이브 콘텐츠 메이커
+        </h1>
+        <button id="settingsBtn" class="settings-btn" title="설정">⚙️</button>
+      </div>
+    </header>
+
+    <!-- 메인 탭 네비게이션 -->
+    <nav class="main-tabs">
+      <button class="main-tab-btn active" data-main-tab="content-generator">
+        🤖 AI 콘텐츠 생성
+      </button>
+      <button class="main-tab-btn" data-main-tab="keyword-analyzer">
+        📊 월간 검색량
+      </button>
+    </nav>
+
+    <!-- API 키 입력 섹션 -->
+    <div id="apiKeySection" class="api-key-section hidden">
+      <h2>⚙️ 설정</h2>
+
+      <div class="settings-group">
+        <h3>Gemini API 키</h3>
+        <p class="api-guide">
+          Gemini API 키를 입력해주세요.<br>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank">
+            🔗 API 키 발급받기
+          </a>
+        </p>
+        <input
+          type="password"
+          id="apiKeyInput"
+          class="api-key-input"
+          placeholder="Gemini API 키를 입력하세요"
+        >
+      </div>
+
+      <div class="settings-group">
+        <h3>네이버 검색광고 API 키</h3>
+        <p class="api-guide">
+          네이버 검색광고 API 키를 입력해주세요.<br>
+          <a href="https://searchad.naver.com/" target="_blank">
+            🔗 네이버 검색광고 접속
+          </a>
+          (도구 > API 관리에서 발급)
+        </p>
+
+        <label class="api-label">Client ID (Access License)</label>
+        <input
+          type="password"
+          id="naverClientIdInput"
+          class="api-key-input"
+          placeholder="네이버 API Client ID"
+        >
+
+        <label class="api-label">Secret Key</label>
+        <input
+          type="password"
+          id="naverSecretKeyInput"
+          class="api-key-input"
+          placeholder="네이버 API Secret Key"
+        >
+
+        <label class="api-label">Customer ID</label>
+        <input
+          type="text"
+          id="naverCustomerIdInput"
+          class="api-key-input"
+          placeholder="네이버 고객 ID"
+        >
+      </div>
+
+      <div class="settings-group">
+        <h3>채널 URL 설정</h3>
+        <label class="url-label">📹 유튜브 URL</label>
+        <input
+          type="text"
+          id="youtubeUrlInput"
+          class="url-input"
+          placeholder="https://youtube.com/@yourchannel"
+        >
+
+        <label class="url-label">📝 블로그 URL</label>
+        <input
+          type="text"
+          id="blogUrlInput"
+          class="url-input"
+          placeholder="https://yourblog.com"
+        >
+
+        <label class="url-label">💬 스레드 URL</label>
+        <input
+          type="text"
+          id="threadUrlInput"
+          class="url-input"
+          placeholder="https://threads.net/@youraccount"
+        >
+      </div>
+
+      <button id="saveApiKeyBtn" class="primary-btn">저장</button>
+      <button id="cancelSettingsBtn" class="secondary-btn">취소</button>
+    </div>
+
+    <!-- AI 콘텐츠 생성 탭 -->
+    <div id="contentGeneratorTab" class="main-tab-content active">
+      <!-- 상태 표시 -->
+      <div id="statusMessage" class="status-message"></div>
+
+      <!-- 유튜브 썸네일 섹션 -->
+      <div class="video-thumbnail-section">
+        <a href="https://www.youtube.com/watch?v=NxAvvhTd7G0" target="_blank" class="video-thumbnail-link">
+          <img src="https://img.youtube.com/vi/NxAvvhTd7G0/maxresdefault.jpg" alt="YouTube 영상" class="video-thumbnail">
+          <div class="play-button-overlay">
+            <svg width="68" height="48" viewBox="0 0 68 48">
+              <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#f00"></path>
+              <path d="M 45,24 27,14 27,34" fill="#fff"></path>
+            </svg>
+          </div>
+        </a>
+      </div>
+
+      <!-- 텍스트 직접 입력 섹션 -->
+      <div class="text-input-section">
+        <label class="text-input-label">✍️ 텍스트 직접 입력 (or URL 입력)</label>
+        <textarea
+          id="directTextInput"
+          class="direct-text-input"
+          placeholder="유튜브 자막이나 분석할 텍스트를 직접 붙여넣으세요...&#10;&#10;비워두면 현재 페이지를 자동으로 분석합니다."
+          rows="6"
+        ></textarea>
+        <div class="text-input-actions">
+          <button id="clearTextBtn" class="clear-text-btn">✕ 지우기</button>
+          <span class="char-count" id="charCount">0자</span>
+        </div>
+        <p class="text-input-guide">💡 팁: 유튜브에서 "..." → "자막 보기" → 전체 텍스트 복사 → 여기에 붙여넣기</p>
+      </div>
+
+      <!-- 생성 버튼 -->
+      <div class="action-section">
+        <button id="generateBtn" class="generate-btn">
+          🚀 콘텐츠 분석하기
+        </button>
+      </div>
+
+      <!-- 로딩 -->
+      <div id="loadingSection" class="loading-section hidden">
+        <div class="spinner"></div>
+        <p>AI가 콘텐츠를 생성하고 있습니다...</p>
+      </div>
+
+      <!-- 결과 섹션 -->
+      <div id="resultSection" class="result-section hidden">
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="shorts">유튜브 숏츠</button>
+          <button class="tab-btn" data-tab="blog">블로그 포스팅</button>
+          <button class="tab-btn" data-tab="thread">스레드 짧은 글</button>
+        </div>
+
+        <div class="tab-content">
+          <!-- 유튜브 숏츠 -->
+          <div id="shorts-content" class="content-panel active">
+            <div class="content-header">
+              <h3>📹 유튜브 숏츠(60초)</h3>
+              <div class="action-buttons">
+                <button class="copy-btn" data-target="shorts">📋 복사</button>
+                <button class="channel-btn" id="youtubeChannelBtn" data-channel="youtube">🎬 유튜브 이동</button>
+              </div>
+            </div>
+            <div id="shorts-text" class="content-text"></div>
+          </div>
+
+          <!-- 블로그 -->
+          <div id="blog-content" class="content-panel">
+            <div class="content-header">
+              <h3>📝 블로그 포스팅</h3>
+              <div class="action-buttons">
+                <button class="copy-btn" data-target="blog" disabled>📋 글+이미지 복사</button>
+                <button class="channel-btn" id="blogChannelBtn" data-channel="blog">📝 블로그 이동</button>
+              </div>
+            </div>
+            <section class="blog-image-tools" aria-label="웹툰 이미지 설정">
+              <div class="blog-image-settings"><label><input type="checkbox" id="blog-images-auto" checked>웹툰 자동 생성</label><label>이미지 수 <select id="blog-image-count"><option value="5">5장</option><option value="4">4장</option></select></label></div>
+              <div class="blog-image-actions"><button id="blog-images-start">웹툰 이미지 생성</button><button id="blog-editor-open">큰 화면</button><button id="blog-text-copy">글만 복사</button><button id="blog-images-save" disabled>HTML 저장</button><button id="blog-images-download" disabled>이미지 원본 ZIP</button></div>
+              <p id="blog-image-status" role="status" aria-live="polite">Codex 계정 로그인으로 본문에 맞는 웹툰을 만듭니다.</p><div id="blog-image-scenes"></div>
+              <p class="blog-image-hint">Codex 계정 사용량이 적용됩니다. 전체 복사 후 네이버 본문에 Ctrl+V로 붙여넣고 이미지 표시를 확인해주세요.</p>
+            </section>
+            <div id="blog-text" class="content-text"></div>
+          </div>
+
+          <!-- 스레드 -->
+          <div id="thread-content" class="content-panel">
+            <div class="content-header">
+              <h3>💬 스레드 짧은 글</h3>
+              <div class="action-buttons">
+                <button class="copy-btn" data-target="thread">📋 복사</button>
+                <button class="channel-btn" id="threadChannelBtn" data-channel="thread">💬 스레드 이동</button>
+              </div>
+            </div>
+            <div id="thread-text" class="content-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 월간 검색량 탭 -->
+    <div id="keywordAnalyzerTab" class="main-tab-content">
+      <div id="keywordStatusMessage" class="status-message"></div>
+
+      <!-- 서버 알림 -->
+      <div id="serverAlert" class="server-alert" style="display: none;">
+        <p>⚠️ 백엔드 서버가 실행되지 않았습니다.</p>
+        <p class="small-text">start_server.bat 파일을 실행하거나</p>
+        <p class="small-text">터미널에서 <code>python server.py</code>를 실행해주세요.</p>
+      </div>
+
+      <!-- 키워드 검색 -->
+      <div class="search-container">
+        <input type="text" id="keywordInput" class="keyword-input" placeholder="키워드를 입력하세요">
+        <button id="keywordSearchBtn" class="search-button">검색</button>
+      </div>
+
+      <!-- 로딩 -->
+      <div id="keywordLoading" class="loading-container" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>검색 중...</p>
+      </div>
+
+      <!-- 차트 영역 -->
+      <div class="charts-container">
+        <div class="chart-wrapper">
+          <h3>검색량 분포</h3>
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+
+      <!-- 결과 테이블 -->
+      <div class="results-container">
+        <div class="main-keyword-section" id="mainKeywordSection" style="display: none;">
+          <h3>📌 메인 키워드</h3>
+          <table id="mainKeywordTable">
+            <thead>
+              <tr>
+                <th>키워드</th>
+                <th>PC 검색량</th>
+                <th>모바일 검색량</th>
+                <th>총 검색량</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="related-keywords-section" id="relatedKeywordsSection" style="display: none;">
+          <h3>🔗 연관 키워드 (최대 10개)</h3>
+          <table id="relatedKeywordsTable">
+            <thead>
+              <tr>
+                <th>키워드</th>
+                <th>PC 검색량</th>
+                <th>모바일 검색량</th>
+                <th>총 검색량</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 하단 배너 -->
+    <footer class="footer-banner">
+      <a href="https://open.kakao.com/o/sW7ZC0sh" target="_blank" class="banner-link banner-left">
+        <span class="banner-icon">💬</span>
+        <span class="banner-text">문의하기</span>
+      </a>
+      <a href="https://litt.ly/bsd_class" target="_blank" class="banner-link banner-right">
+        <span class="banner-icon">🎓</span>
+        <span class="banner-text">무료비밀특강!</span>
+      </a>
+    </footer>
+  </div>
+
+  <script src="chart.min.js"></script>
+  <script src="features/blog-images/document.js"></script>
+  <script src="features/thread-post/format.js"></script>
+  <script src="features/shorts-post/format.js"></script>
+  <script src="features/content-generation/contract.js"></script>
+  <script src="features/blog-images/storage.js"></script>
+  <script src="features/blog-images/encoding.js"></script>
+  <script src="features/blog-images/controller.js"></script>
+  <script src="popup.js"></script>
+  <script src="keyword-functions.js"></script>
+</body>
+</html>

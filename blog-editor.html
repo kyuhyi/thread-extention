@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>블로그 글과 웹툰 이미지</title><link rel="stylesheet" href="features/blog-images/blog.css"></head>
+<body class="blog-editor">
+  <header class="blog-editor-header"><h1>블로그 글과 웹툰 이미지</h1><button class="copy-btn" data-target="blog" disabled>글+이미지 전체 복사</button></header>
+  <details><summary>본문 직접 입력 / 수정</summary><textarea id="blog-source" aria-label="블로그 본문" placeholder="이미 작성한 글을 붙여넣어도 됩니다."></textarea><button id="blog-source-apply">본문 적용하고 이미지 생성</button></details>
+  <section class="blog-image-tools" aria-label="웹툰 이미지 설정">
+    <div class="blog-image-settings"><label><input type="checkbox" id="blog-images-auto" checked>글 생성 후 웹툰 자동 생성</label><label>이미지 수 <select id="blog-image-count"><option value="5">5장</option><option value="4">4장</option></select></label></div>
+    <div class="blog-image-actions"><button id="blog-images-start">웹툰 이미지 생성</button><button id="blog-text-copy">글만 복사</button><button id="blog-images-save" disabled>HTML 저장</button><button id="blog-images-download" disabled>이미지 원본 ZIP</button></div>
+    <p id="blog-image-status" role="status" aria-live="polite">블로그 글을 생성하거나 본문을 직접 입력해주세요.</p><div id="blog-image-scenes"></div>
+    <p class="blog-image-hint">Codex 계정 사용량이 적용됩니다. 전체 복사 후 네이버 본문에 Ctrl+V로 붙여넣으세요. 이미지가 빠지면 원본 ZIP으로 사진을 첨부할 수 있습니다.</p>
+  </section>
+  <article id="blog-text"><p>작성한 블로그 글과 웹툰 이미지가 여기에 표시됩니다.</p></article>
+  <script src="features/blog-images/storage.js"></script><script src="features/blog-images/document.js"></script><script src="features/blog-images/encoding.js"></script><script src="features/blog-images/controller.js"></script><script src="features/blog-images/editor.js"></script>
+</body></html>

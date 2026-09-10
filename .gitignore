@@ -1,0 +1,12 @@
+node_modules/
+__pycache__/
+.env
+.env.*
+output/
+*.log
+result.txt
+tmpclaude-*
+.claude/
+*.code-workspace
+WORK_STATUS.md
+*backup*/

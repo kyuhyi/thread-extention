@@ -1,0 +1,10 @@
+node_modules/
+.next/
+dist/
+.git/
+__pycache__/
+.env
+.env.*
+output/
+*.log
+chart.min.js

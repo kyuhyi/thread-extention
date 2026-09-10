@@ -1,0 +1,26 @@
+.blog-image-tools { padding: 14px; margin-bottom: 14px; border: 1px solid #555; border-radius: 10px; background: #24272b; color: #eee; }
+.blog-image-settings, .blog-image-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+.blog-image-tools label { font-size: 13px; display: inline-flex; align-items: center; gap: 5px; }
+.blog-image-tools select { padding: 5px; border-radius: 5px; color: #eee; background: #333; }
+.blog-image-tools button, .blog-editor-header button { padding: 8px 10px; font-size: 12px; cursor: pointer; border: 1px solid #667; border-radius: 6px; color: #eee; background: #353941; }
+.blog-image-tools button:disabled, button.copy-btn:disabled { opacity: .45; cursor: default; }
+#blog-images-start { background: #28593c; }
+#blog-image-status { font-size: 12px; line-height: 1.6; margin: 8px 0; }
+#blog-image-status.error { color: #ffb5a8; }
+#blog-image-scenes { display: flex; gap: 5px; flex-wrap: wrap; }
+.scene-chip { font-size: 11px; border-radius: 12px; padding: 4px 7px; background: #40444b; }
+.scene-chip.done { background: #286044; }
+.scene-chip.generating { background: #6e561f; }
+.scene-chip.failed { background: #7a3832; }
+.blog-image-hint { font-size: 11px; line-height: 1.5; color: #b8bdc5; margin-top: 10px; }
+#blog-text img { border-radius: 8px; width: 100%; max-width: 800px; height: auto; }
+#blog-content .content-header { flex-wrap: wrap; gap: 10px; }
+body.blog-editor { width: auto; min-width: 360px; max-width: 1080px; margin: auto; padding: 24px; background: #17191d; color: #eee; font-family: Arial, sans-serif; }
+.blog-editor-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.blog-editor-header h1 { font-size: 22px; }
+.blog-editor #blog-text { padding: 36px; background: white; color: #222; border-radius: 12px; min-height: 300px; }
+.blog-editor .copy-btn { padding: 12px 18px; background: #329759; color: white; border: 0; border-radius: 8px; cursor: pointer; }
+.blog-editor #blog-source { width: 100%; min-height: 140px; box-sizing: border-box; padding: 12px; margin: 10px 0; color: #eee; background: #24272b; border: 1px solid #555; border-radius: 8px; }
+.blog-editor details { margin-bottom: 18px; }
+.blog-editor #blog-source-apply { padding: 8px 12px; cursor: pointer; }
+@media (max-width: 600px) { body.blog-editor { padding: 12px; } .blog-editor #blog-text { padding: 20px; } }
